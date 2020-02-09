@@ -2,7 +2,6 @@
 {
     public class GradeDTO
     {
-        public string GradeName { get; set; }
-        public string Section { get; set; }
+        public string ClassName { get; set; }
     }
 }

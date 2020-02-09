@@ -2,11 +2,15 @@
 
 namespace Core.Data.Entity
 {
-    public class Grade
+    public class Grade : BaseEntity
     {
-        public int GradeId { get; set; }
-        public string GradeName { get; set; }
+        public int Class { get; set; }
         public string Section { get; set; }
         public ICollection<Student> Students { get; set; }
+
+        public override string ToString()
+        {
+            return Class + Section;
+        }
     }
 }
