@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using WebApi.Mapping;
 
 namespace WebApi
@@ -34,6 +35,11 @@ namespace WebApi
             services.AddDbContext<SchoolDbContext>(options => 
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "School API", Version = "v1" });
+            });
+
             services.AddControllers();
         }
 
@@ -46,6 +52,16 @@ namespace WebApi
             }
 
             app.UseHttpsRedirection();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "School API V1");
+            });
 
             app.UseRouting();
 
