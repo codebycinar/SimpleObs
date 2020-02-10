@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Infrastructure.Database
 {
@@ -187,6 +186,7 @@ namespace Infrastructure.Database
         private static Student[] CreateStudents()
         {
             var entities = new List<Student>();
+
             int id = 1;
             for (int i = 0; i < 48; i++)
             {
@@ -203,6 +203,7 @@ namespace Infrastructure.Database
 
                         });
                     id++;
+
                 }
 
             }
@@ -241,6 +242,7 @@ namespace Infrastructure.Database
             }
             return entities.ToArray();
         }
+
 
         #endregion
 

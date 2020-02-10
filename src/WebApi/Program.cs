@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Infrastructure.Database;
+﻿using Infrastructure.Database;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
+using WebApi.Identity;
 
 namespace WebApi
 {
@@ -22,7 +20,10 @@ namespace WebApi
                 try
                 {
                     var context = services.GetRequiredService<SchoolDbContext>();
+                    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                     DbInitializer.Initialize(context);
+                    SecurityDbInitializer.SeedData(userManager, roleManager, context);
                 }
                 catch (Exception ex)
                 {
