@@ -111,6 +111,7 @@ namespace SchoolWebApp.Controllers
             }
 
             StudentDetailViewModel result = new StudentDetailViewModel();
+            
             result.Student = _mapper.Map<StudentDTO>(student);
             result.Student.ExamsResults = examResults;
             result.Student.LessonResults = lessonResults;

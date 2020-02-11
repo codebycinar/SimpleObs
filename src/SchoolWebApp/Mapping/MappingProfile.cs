@@ -33,7 +33,16 @@ namespace SchoolWebApp.Mapping
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))
                 .ForMember(dest => dest.StudentCode, opt => opt.MapFrom(src => src.StudentCode))
                 .ForMember(dest => dest.ExamsResults, opt => opt.MapFrom(src => src.StudentExams))
-            .ForMember(dest => dest.LessonResults, opt => opt.MapFrom(src => src.StudentLessons));
+                .ForMember(dest => dest.ExamsResults, opt => opt.Condition(src => src.StudentExams != null))
+                .ForMember(dest => dest.LessonResults, opt => opt.MapFrom(src => src.StudentLessons))
+                .ForMember(dest => dest.LessonResults, opt => opt.Condition(src => src.StudentLessons != null));
+            CreateMap<StudentExam, ExamResultsDTO>()
+                .ForMember(dest => dest.Exam, opt => opt.MapFrom(src => src.Exam))
+                .ForMember(dest => dest.Result, opt => opt.MapFrom(src => src.Result));
+
+            CreateMap<StudentLesson, LessonResultsDTO>()
+                .ForMember(dest => dest.Lesson, opt => opt.MapFrom(src => src.Lesson))
+                .ForMember(dest => dest.Result, opt => opt.MapFrom(src => src.Result));
         }
     }
 }
