@@ -54,6 +54,27 @@ namespace Infrastructure.Migrations
                     b.ToTable("Classrooms");
                 });
 
+            modelBuilder.Entity("Core.Data.Entity.GradeLesson", b =>
+                {
+                    b.Property<int>("LessonId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("GradeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("Average")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("LessonId", "GradeId");
+
+                    b.HasIndex("GradeId");
+
+                    b.ToTable("GradeLessons");
+                });
+
             modelBuilder.Entity("Core.Data.Entity.Lesson", b =>
                 {
                     b.Property<int>("Id")
@@ -74,11 +95,11 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ClassId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("FirstName")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("GradeId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("LastName")
                         .HasColumnType("TEXT");
@@ -88,7 +109,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClassId");
+                    b.HasIndex("GradeId");
 
                     b.ToTable("Students");
                 });
@@ -119,6 +140,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("StudentId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<decimal>("Result")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("LessonId", "StudentId");
 
                     b.HasIndex("StudentId");
@@ -135,11 +159,26 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Core.Data.Entity.GradeLesson", b =>
+                {
+                    b.HasOne("Core.Data.Entity.Grade", "Grade")
+                        .WithMany("LessonResults")
+                        .HasForeignKey("GradeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Data.Entity.Lesson", "Lesson")
+                        .WithMany("LessonResults")
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Core.Data.Entity.Student", b =>
                 {
-                    b.HasOne("Core.Data.Entity.Grade", "Class")
+                    b.HasOne("Core.Data.Entity.Grade", "Grade")
                         .WithMany("Students")
-                        .HasForeignKey("ClassId")
+                        .HasForeignKey("GradeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

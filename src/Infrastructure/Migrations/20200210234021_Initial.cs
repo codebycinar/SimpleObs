@@ -42,14 +42,14 @@ namespace Infrastructure.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     StudentCode = table.Column<string>(nullable: true),
-                    ClassId = table.Column<int>(nullable: false)
+                    GradeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Students", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Students_Classrooms_ClassId",
-                        column: x => x.ClassId,
+                        name: "FK_Students_Classrooms_GradeId",
+                        column: x => x.GradeId,
                         principalTable: "Classrooms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -77,11 +77,38 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GradeLessons",
+                columns: table => new
+                {
+                    GradeId = table.Column<int>(nullable: false),
+                    LessonId = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false),
+                    Average = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GradeLessons", x => new { x.LessonId, x.GradeId });
+                    table.ForeignKey(
+                        name: "FK_GradeLessons_Classrooms_GradeId",
+                        column: x => x.GradeId,
+                        principalTable: "Classrooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GradeLessons_Lessons_LessonId",
+                        column: x => x.LessonId,
+                        principalTable: "Lessons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StudentLessons",
                 columns: table => new
                 {
                     StudentId = table.Column<int>(nullable: false),
-                    LessonId = table.Column<int>(nullable: false)
+                    LessonId = table.Column<int>(nullable: false),
+                    Result = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -131,6 +158,11 @@ namespace Infrastructure.Migrations
                 column: "LessonId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_GradeLessons_GradeId",
+                table: "GradeLessons",
+                column: "GradeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StudentExams_ExamId",
                 table: "StudentExams",
                 column: "ExamId");
@@ -141,13 +173,16 @@ namespace Infrastructure.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Students_ClassId",
+                name: "IX_Students_GradeId",
                 table: "Students",
-                column: "ClassId");
+                column: "GradeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "GradeLessons");
+
             migrationBuilder.DropTable(
                 name: "StudentExams");
 

@@ -11,7 +11,6 @@ using System.Text;
 using System.Threading.Tasks;
 using WebApi.Helpers;
 using WebApi.Identity.ViewModels;
-using WebApi.Services;
 using WebApi.Settings;
 using Microsoft.Extensions.Options;
 using WebApi.Identity.Models;
@@ -22,27 +21,21 @@ namespace WebApi.Identity.Controllers
     [Route("api/auth")]
     public class AuthController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
-        private readonly IEmailService _emailService;
-        private readonly ClientAppSettings _client;
         private readonly JwtSecurityTokenSettings _jwt;
 
         public AuthController(
-            UserManager<IdentityUser> userManager,
+            UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
             IConfiguration configuration,
-            IEmailService emailService,
-            IOptions<ClientAppSettings> client,
             IOptions<JwtSecurityTokenSettings> jwt
             )
         {
             this._userManager = userManager;
             this._roleManager = roleManager;
             this._configuration = configuration;
-            this._emailService = emailService;
-            this._client = client.Value;
             this._jwt = jwt.Value;
         }
 
@@ -74,35 +67,7 @@ namespace WebApi.Identity.Controllers
             return BadRequest(result.Errors.Select(x => x.Description));
         }
 
-        /// <summary>
-        /// Register an account
-        /// </summary>
-        /// <param name="model">RegisterViewModel</param>
-        /// <returns></returns>
-        [HttpPost]
-        [ProducesResponseType(typeof(IdentityResult), 200)]
-        [ProducesResponseType(typeof(IEnumerable<string>), 400)]
-        [Route("register")]
-        public async Task<IActionResult> Register([FromBody]RegisterViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState.Values.Select(x => x.Errors.FirstOrDefault().ErrorMessage));
-
-            var user = new IdentityUser { UserName = model.Email, Email = model.Email };
-            var result = await _userManager.CreateAsync(user, model.Password);
-
-            if (result.Succeeded)
-            {
-                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                var callbackUrl = $"{_client.Url}{_client.EmailConfirmationPath}?uid={user.Id}&code={System.Net.WebUtility.UrlEncode(code)}";
-
-                await _emailService.SendEmailConfirmationAsync(model.Email, callbackUrl);
-
-                return Ok();
-            }
-
-            return BadRequest(result.Errors.Select(x => x.Description));
-        }
+      
 
         /// <summary>
         /// Log into account
@@ -115,7 +80,7 @@ namespace WebApi.Identity.Controllers
         [Route("token")]
         public async Task<IActionResult> CreateToken([FromBody]LoginViewModel model)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            var user = await _userManager.FindByNameAsync(model.UserName);
             if (user == null)
                 return BadRequest(new string[] { "Invalid credentials." });
 
@@ -192,82 +157,7 @@ namespace WebApi.Identity.Controllers
             return BadRequest(new string[] { "Unable to verify Authenticator Code!" });
         }
 
-        /// <summary>
-        /// Forgot email sends an email with a link containing reset token
-        /// </summary>
-        /// <param name="model">ForgotPasswordViewModel</param>
-        /// <returns></returns>
-        [HttpPost]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(IEnumerable<string>), 400)]
-        [Route("forgotPassword")]
-        public async Task<IActionResult> ForgotPassword([FromBody]ForgotPasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState.Values.Select(x => x.Errors.FirstOrDefault().ErrorMessage));
-
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
-                return BadRequest(new string[] { "Please verify your email address." });
-
-            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var callbackUrl = $"{_client.Url}{_client.ResetPasswordPath}?uid={user.Id}&code={System.Net.WebUtility.UrlEncode(code)}";
-
-            await _emailService.SendPasswordResetAsync(model.Email, callbackUrl);
-
-            return Ok();
-        }
-
-        /// <summary>
-        /// Reset account password with reset token
-        /// </summary>
-        /// <param name="model">ResetPasswordViewModel</param>
-        /// <returns></returns>
-        [HttpPost]
-        [ProducesResponseType(typeof(IdentityResult), 200)]
-        [ProducesResponseType(typeof(IEnumerable<string>), 400)]
-        [Route("resetPassword")]
-        public async Task<IActionResult> ResetPassword([FromBody]ResetPasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState.Values.Select(x => x.Errors.FirstOrDefault().ErrorMessage));
-
-            var user = await _userManager.FindByIdAsync(model.UserId);
-            if (user == null)
-            {
-                // Don't reveal that the user does not exist
-                return BadRequest(new string[] { "Invalid credentials." });
-            }
-            var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
-            if (result.Succeeded)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result.Errors.Select(x => x.Description));
-        }
-
-        /// <summary>
-        /// Resend email verification email with token link
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(IEnumerable<string>), 400)]
-        [Route("resendVerificationEmail")]
-        public async Task<IActionResult> resendVerificationEmail([FromBody]UserViewModel model)
-        {
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null)
-                return BadRequest(new string[] { "Could not find user!" });
-
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            var callbackUrl = $"{_client.Url}{_client.EmailConfirmationPath}?uid={user.Id}&code={System.Net.WebUtility.UrlEncode(code)}";
-            await _emailService.SendEmailConfirmationAsync(user.Email, callbackUrl);
-
-            return Ok();
-        }
-
-        private async Task<JwtSecurityToken> CreateJwtToken(IdentityUser user)
+        private async Task<JwtSecurityToken> CreateJwtToken(ApplicationUser user)
         {
             var userClaims = await _userManager.GetClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);

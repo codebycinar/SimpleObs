@@ -39,14 +39,18 @@ namespace Infrastructure.Database
             context.AddRangeAsync(students);
             context.SaveChangesAsync();
 
-            //Öğrenciye dersleri ata
+            //Öğrenciye sınav ve sonuçları ata
+            var studentExams = CreateStudentExams(students, exams);
+            context.AddRangeAsync(studentExams);
+            context.SaveChangesAsync();
+
+            //Öğrenciye ders sonuçlarını ata
             var studentLessons = CreateStudentLessons(students, lessons);
             context.AddRangeAsync(studentLessons);
             context.SaveChangesAsync();
 
-            //Öğrenciye sınav ve sonuçları ata
-            var studentExams = CreateStudentExams(students, exams);
-            context.AddRangeAsync(studentExams);
+            var gradeLessons = CreateGradeLessons(grades, lessons, studentLessons);
+            context.AddRangeAsync(gradeLessons);
             context.SaveChangesAsync();
             #endregion
 
@@ -58,7 +62,7 @@ namespace Infrastructure.Database
             string[] sections = new string[] { "A", "B", "C", "D" };
             var entities = new List<Grade>();
             int id = 1;
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < sections.Length; j++)
                 {
@@ -188,7 +192,7 @@ namespace Infrastructure.Database
             var entities = new List<Student>();
 
             int id = 1;
-            for (int i = 0; i < 48; i++)
+            for (int i = 0; i < 16; i++)
             {
                 for (int j = 0; j < 5; j++)
                 {
@@ -196,7 +200,7 @@ namespace Infrastructure.Database
                         new Student()
                         {
                             Id = id,
-                            ClassId = i + 1,
+                            GradeId= i + 1,
                             StudentCode = (100 + id).ToString(),
                             FirstName = GetName(),
                             LastName = GetSurname()
@@ -209,6 +213,27 @@ namespace Infrastructure.Database
             }
             return entities.ToArray();
         }
+        private static StudentExam[] CreateStudentExams(Student[] students, Exam[] exams)
+        {
+            var entities = new List<StudentExam>();
+            foreach (var student in students)
+            {
+                student.StudentExams = new List<StudentExam>();
+                foreach (var exam in exams)
+                {
+                    var stExam = new StudentExam
+                    {
+                        ExamId = exam.Id,
+                        StudentId = student.Id,
+                        Result = GetResult()
+                    };
+                    entities.Add(stExam);
+                    student.StudentExams.Add(stExam);
+                }
+            }
+            return entities.ToArray();
+        }
+
         private static StudentLesson[] CreateStudentLessons(Student[] students, Lesson[] lessons)
         {
             var entities = new List<StudentLesson>();
@@ -216,33 +241,41 @@ namespace Infrastructure.Database
             {
                 foreach (var lesson in lessons)
                 {
+                    var lessonExams = student.StudentExams.Where(x => x.Exam.LessonId.Equals(lesson.Id));
+                    var writtenExams = lessonExams.Where(x => x.Exam.ExamType == ExamTypes.Yazili).ToList();
+                    var speechExams = lessonExams.Where(x => x.Exam.ExamType == ExamTypes.Sozlu);
+                    var result = (writtenExams.Average(x => x.Result) + speechExams.Sum(x => x.Result)) / (1 + speechExams.Count());
+                    
                     entities.Add(new StudentLesson
                     {
                         LessonId = lesson.Id,
-                        StudentId = student.Id
-                    });
-                }
-            }
-            return entities.ToArray();
-        }
-        private static StudentExam[] CreateStudentExams(Student[] students, Exam[] exams)
-        {
-            var entities = new List<StudentExam>();
-            foreach (var student in students)
-            {
-                foreach (var exam in exams)
-                {
-                    entities.Add(new StudentExam
-                    {
-                        ExamId = exam.Id,
                         StudentId = student.Id,
-                        Result = GetResult()
+                        Result = result
                     });
                 }
+
             }
             return entities.ToArray();
         }
 
+        private static GradeLesson[] CreateGradeLessons(Grade[] grades, Lesson[] lessons, StudentLesson[] lessonResults)
+        {
+            var entities = new List<GradeLesson>();
+            foreach (var grade in grades)
+            {
+                foreach (var lesson in lessons)
+                {
+                    var results = lessonResults.Where(x => x.Student.GradeId.Equals(grade.Id) && x.LessonId.Equals(lesson.Id));
+                    entities.Add(new GradeLesson
+                    {
+                        GradeId = grade.Id,
+                        LessonId = lesson.Id,
+                        Average = results.Average(x => x.Result)
+                    });
+                }
+            }
+            return entities.ToArray();
+        }
 
         #endregion
 

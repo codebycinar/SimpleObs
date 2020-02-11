@@ -9,20 +9,25 @@ namespace WebApi.Identity
 {
     public static class SecurityDbInitializer
     {
-        public static void SeedData(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager,SchoolDbContext schoolDb)
+        public static void SeedData(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, SchoolDbContext schoolDb)
         {
+            if (userManager.FindByNameAsync("admin").Result != null)
+            {
+                return;   // Db seed edilmiş
+            }
             CreateRoles(roleManager);
             CreateLogins(userManager, schoolDb.Students.ToList());
         }
 
         #region Data Creation Helpers
 
-        private static void CreateLogins(UserManager<IdentityUser> userManager, List<Student> students)
+        private static void CreateLogins(UserManager<ApplicationUser> userManager, List<Student> students)
         {
             foreach (var student in students)
             {
-                var studentUser = new IdentityUser
+                var studentUser = new ApplicationUser
                 {
+                    StudentId=student.Id,
                     Email = $"abc{student.Id.ToString()}@school.edu.tr",
                     EmailConfirmed = true,
                     NormalizedUserName = $"abc{student.Id.ToString()}",
@@ -40,10 +45,10 @@ namespace WebApi.Identity
                     }
                 }
             }
-           
+
             if (userManager.FindByEmailAsync("admin@school.edu.tr").Result == null)
             {
-                var adminUser = new IdentityUser
+                var adminUser = new ApplicationUser
                 {
                     Email = $"admin@school.edu.tr",
                     EmailConfirmed = true,

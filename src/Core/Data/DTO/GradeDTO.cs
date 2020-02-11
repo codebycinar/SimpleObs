@@ -1,7 +1,10 @@
-﻿namespace Core.Data.DTO
+﻿using System.Collections.Generic;
+
+namespace Core.Data.DTO
 {
     public class GradeDTO
     {
-        public string ClassName { get; set; }
+        public string GradeName { get; set; }
+        public List<GradeLessonResultDTO> GradeLessonResults { get; set; }
     }
 }

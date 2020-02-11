@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebApi.Identity
 {
-    public class SecurityContext : IdentityDbContext<IdentityUser>
+    public class SecurityContext : IdentityDbContext<ApplicationUser>
     {
         public SecurityContext(DbContextOptions<SecurityContext> options)
             : base(options)

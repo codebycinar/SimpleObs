@@ -4,7 +4,8 @@ namespace Core.Data.DTO
 {
     public class ExamResultsDTO
     {
-        public StudentDTO Student { get; set; }
-        public List<ExamDTO> ExamResults { get; set; }
+        public ExamDTO Exam { get; set; }
+        public decimal Result { get; set; }
+
     }
 }

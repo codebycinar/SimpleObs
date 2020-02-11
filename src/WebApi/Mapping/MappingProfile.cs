@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Core.Data.DTO;
 using Core.Data.Entity;
-using System.Linq;
 
 namespace WebApi.Mapping
 {
@@ -10,23 +9,27 @@ namespace WebApi.Mapping
         public MappingProfile()
         {
             CreateMap<Grade, GradeDTO>()
-                .ForMember(dest => dest.ClassName, opt => opt.MapFrom(src => src.ToString()));
+                .ForMember(dest => dest.GradeName, opt => opt.MapFrom(src => src.ToString()))
+                .ForMember(dest => dest.GradeLessonResults, opt => opt.MapFrom(src => src.LessonResults));
+
+            CreateMap<GradeLesson, GradeLessonResultDTO>()
+                .ForMember(dest => dest.Lesson, opt => opt.MapFrom(src => src.Lesson))
+                .ForMember(dest => dest.Grade, opt => opt.MapFrom(src => src.Grade))
+                .ForMember(dest => dest.Average, opt => opt.MapFrom(src => src.Average));
+
             CreateMap<Exam, ExamDTO>()
                 .ForMember(dest => dest.ExamName, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.Lesson, opt => opt.MapFrom(src => src.Lesson))
-                .ForMember(dest => dest.Result, opt => opt.MapFrom(src => src.StudentExams.Select(x => x.Result)));
+                .ForMember(dest => dest.Lesson, opt => opt.MapFrom(src => src.Lesson));
             CreateMap<Lesson, LessonDTO>()
                 .ForMember(dest => dest.LessonName, opt => opt.MapFrom(src => src.Name));
             CreateMap<Student, StudentDTO>()
-                .ForMember(dest => dest.Class, opt => opt.MapFrom(src => src.Class))
+                .ForMember(dest => dest.Grade, opt => opt.MapFrom(src => src.Grade))
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))
                 .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))
-                .ForMember(dest => dest.StudentCode, opt => opt.MapFrom(src => src.StudentCode));
-
-
-
-
-
+                .ForMember(dest => dest.StudentCode, opt => opt.MapFrom(src => src.StudentCode))
+                .ForMember(dest => dest.ExamsResults, opt => opt.MapFrom(src => src.StudentExams))
+            .ForMember(dest => dest.LessonResults, opt => opt.MapFrom(src => src.StudentLessons));
+          
             CreateMap<Student, StudentDTO>();
         }
     }

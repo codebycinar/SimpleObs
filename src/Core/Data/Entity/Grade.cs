@@ -7,7 +7,7 @@ namespace Core.Data.Entity
         public int Class { get; set; }
         public string Section { get; set; }
         public ICollection<Student> Students { get; set; }
-
+        public ICollection<GradeLesson> LessonResults { get; set; }
         public override string ToString()
         {
             return Class + Section;

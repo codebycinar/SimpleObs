@@ -16,13 +16,14 @@ namespace Infrastructure.Database
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<StudentExam> StudentExams { get; set; }
         public virtual DbSet<StudentLesson> StudentLessons { get; set; }
+        public virtual DbSet<GradeLesson> GradeLessons { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region One to Many İlişkiler
             modelBuilder.Entity<Grade>()
                 .HasMany(cls => cls.Students)
-                .WithOne(st => st.Class);
+                .WithOne(st => st.Grade);
 
             #endregion
 
@@ -52,6 +53,19 @@ namespace Infrastructure.Database
                 .HasOne(sl => sl.Student)
                 .WithMany(sl => sl.StudentLessons)
                 .HasForeignKey(s => s.StudentId);
+
+            modelBuilder.Entity<GradeLesson>()
+              .HasKey(sl => new { sl.LessonId, sl.GradeId });
+
+            modelBuilder.Entity<GradeLesson>()
+                .HasOne(sl => sl.Lesson)
+                .WithMany(sl => sl.LessonResults)
+                .HasForeignKey(l => l.LessonId);
+
+            modelBuilder.Entity<GradeLesson>()
+                .HasOne(sl => sl.Grade)
+                .WithMany(sl => sl.LessonResults)
+                .HasForeignKey(s => s.GradeId);
             #endregion
 
         }

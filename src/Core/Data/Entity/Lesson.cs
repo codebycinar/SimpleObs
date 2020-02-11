@@ -11,5 +11,7 @@ namespace Core.Data.Entity
         public string Name { get; set; }
         public ICollection<Exam> LessonExams { get; set; }
         public ICollection<StudentLesson> LessonStudents { get; set; }
+
+        public ICollection<GradeLesson> LessonResults { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace WebApi.Helpers
     {
         public static void ConfigureService(IServiceCollection service)
         {
-            service.AddIdentity<IdentityUser, IdentityRole>()
+            service.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<SecurityContext>()
                 .AddDefaultTokenProviders();
 

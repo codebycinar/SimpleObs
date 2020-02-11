@@ -20,7 +20,7 @@ namespace WebApi
                 try
                 {
                     var context = services.GetRequiredService<SchoolDbContext>();
-                    var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                     DbInitializer.Initialize(context);
                     SecurityDbInitializer.SeedData(userManager, roleManager, context);

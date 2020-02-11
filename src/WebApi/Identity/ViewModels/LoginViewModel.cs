@@ -4,12 +4,9 @@ namespace WebApi.Identity.ViewModels
 {
     public class LoginViewModel
     {
+        [Required]
         public string UserName { get; set; }
 
-        [Required]
-        [EmailAddress]
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
