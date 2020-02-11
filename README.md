@@ -25,10 +25,10 @@ SimpleObs reposu .Net Core ile hazırlanmış API' lara istek yapan Asp.Net Core
 
 ---
 
-## Örnek
+## Sample
+![alt text](https://github.com/codebycinar/SimpleObs/blob/master/img/Notes1.PNG)
 
-
-
+![alt text](https://github.com/codebycinar/SimpleObs/blob/master/img/Notes2.PNG)
 ---
 
 ## Installation
