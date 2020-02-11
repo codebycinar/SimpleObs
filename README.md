@@ -1,5 +1,6 @@
 # SimpleObs
 SimpleObs reposu .Net Core ile hazırlanmış API' lara istek yapan Asp.Net Core arayüzlerden oluşan basit bir öğrenci-not senaryosunun demosudur.
+
 ![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)
 
 # Kullanılan Teknolojiler
