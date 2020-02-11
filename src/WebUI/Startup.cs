@@ -1,9 +1,13 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
+using WebApi.Identity;
 using WebUI.Models;
 
 namespace WebUI
@@ -25,6 +29,19 @@ namespace WebUI
             {
                 options.JsonSerializerOptions.MaxDepth = 10;
             });
+
+            services.AddIdentityCore<ApplicationUser>()
+                 .AddRoles<IdentityRole>()
+                 .AddEntityFrameworkStores<SecurityContext>()
+                 .AddSignInManager()
+                 .AddDefaultTokenProviders();
+
+            services.AddAuthentication(o =>
+            {
+                o.DefaultScheme = IdentityConstants.ApplicationScheme;
+                o.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+            })
+            .AddIdentityCookies(o => { });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

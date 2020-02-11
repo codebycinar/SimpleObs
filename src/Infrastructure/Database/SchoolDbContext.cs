@@ -1,9 +1,10 @@
 ﻿using Core.Data.Entity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Database
 {
-    public class SchoolDbContext : DbContext
+    public class SchoolDbContext : IdentityDbContext
     {
         public SchoolDbContext(DbContextOptions<SchoolDbContext> options)
            : base(options)
@@ -17,9 +18,11 @@ namespace Infrastructure.Database
         public virtual DbSet<StudentExam> StudentExams { get; set; }
         public virtual DbSet<StudentLesson> StudentLessons { get; set; }
         public virtual DbSet<GradeLesson> GradeLessons { get; set; }
+        public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             #region One to Many İlişkiler
             modelBuilder.Entity<Grade>()
                 .HasMany(cls => cls.Students)

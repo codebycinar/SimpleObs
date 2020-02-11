@@ -1,0 +1,53 @@
+﻿@model List<StudentDetailViewModel>
+@{
+    ViewData["Title"] = "StudentList";
+}
+
+<h1>StudentList</h1>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Numarası
+            </th>
+            <th>
+                Adı
+            </th>
+            <th>
+                Soyadı
+            </th>
+            @foreach (var item in Model.FirstOrDefault().SchoolLessonResults)
+            {
+                <th> @item.Lesson.LessonName </th>
+            }
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var st in Model)
+        {
+            <tr>
+                <td>
+                    @st.Student.StudentCode
+                </td>
+                <td>
+                    @st.Student.FirstName
+                </td>
+                <td>
+                    @st.Student.LastName
+                </td>
+                @foreach (var les in st.SchoolLessonResults)
+                {
+                    <td>
+                        @les.Average
+                    </td>
+                }
+                <td>
+                    <a asp-action="Detail" asp-route-id="@st.Student.StudentId">Detaylar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
