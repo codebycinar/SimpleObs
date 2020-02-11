@@ -53,17 +53,19 @@ SimpleObs reposu .Net Core ile hazırlanmış API' lara istek yapan Asp.Net Core
 > 80 Öğrenci
 
 - Her öğrenci için abc ile başlayan kullanıcı adı oluşur, hepsinin şifresi 123456 'dır.
+```
 Örnek :
 Username : abc1
 Password : 123456
 
 Username : abc2
 Password : 123456
-
+```
 - Admin kullanıcısı tüm öğrencilere ait dataları görüntüleyebilmektedir.
+```
 Username : admin
 Password : 123456
-
+```
 ---
 
 ## Contributing
