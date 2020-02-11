@@ -3,12 +3,12 @@ SimpleObs reposu .Net Core ile hazırlanmış API' lara istek yapan Asp.Net Core
 
 # Kullanılan Teknolojiler
 
-> .Net Core 3.1
-> Identity
-> EntityFrameworkCore
-> SQLite
-> Automapper
-> Swagger
+- .Net Core 3.1
+- Identity
+- EntityFrameworkCore
+- SQLite
+- Automapper
+- Swagger
 
 ![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)
 
@@ -21,37 +21,48 @@ SimpleObs reposu .Net Core ile hazırlanmış API' lara istek yapan Asp.Net Core
 - [FAQ](#faq)
 - [Support](#support)
 - [License](#license)
-
-
 ---
 
 ## Sample
+
+
 ![alt text](https://github.com/codebycinar/SimpleObs/blob/master/img/Notes1.PNG)
 
 ![alt text](https://github.com/codebycinar/SimpleObs/blob/master/img/Notes2.PNG)
 ---
 
-## Installation
+## Yükleme
 
-- All the `code` required to get started
+- Repository'deki tüm proje `code` ları çalıştırılmalıdır.
 
 ### Clone
 
-- Clone this repo to your local machine using `https://github.com/codebycinar/SimpleObs.git`
+- Bilgisayarınıza `https://github.com/codebycinar/SimpleObs.git` adresinden clone alabilirsiniz.
 
-### Setup
+### Kurulum
 
-- If you want more syntax highlighting, format your code like this:
+- Proje codefirst yaklaşımı ile hazırlanmıştır. Bu nedenle Application altındaki Data klasöründe SchoolDb.db veritabanı dosyası bulunmalıdır. Eğer yoksa Migration ve Database Update işlemleri yapılmalıdır. Uygulama çalıştırıldığında, Database seed olacaktır.
 
 ---
 
-## Features
-## Usage (Optional)
-## Documentation (Optional)
-## Tests (Optional)
+## Kullanım
+- Database seed işlemi sonrasında aşağıdaki datalar oluşur
+> 16 sınıf (1'den 4'e - A,B,C,D şubeleri), 
+> 3 Ders (Türkçe, Matematik, Fen Bilimleri),
+> 12 Sınav (Yazılı ve Sözlü sınavlar),
+> 80 Öğrenci
 
-- Going into more detail on code and technologies used
-- I utilized this nifty <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown Cheatsheet</a> for this sample `README`.
+- Her öğrenci için abc ile başlayan kullanıcı adı oluşur, hepsinin şifresi 123456 'dır.
+Örnek :
+Username : abc1
+Password : 123456
+
+Username : abc2
+Password : 123456
+
+- Admin kullanıcısı tüm öğrencilere ait dataları görüntüleyebilmektedir.
+Username : admin
+Password : 123456
 
 ---
 
