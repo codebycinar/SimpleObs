@@ -32,6 +32,8 @@ namespace SchoolWebApp.Controllers
                 if (result.Succeeded)
                 {
                     var user = await _userManager.GetUserAsync(User);
+                    if (login.Username == "admin")
+                        return RedirectToAction("Index", "Admin");
                     return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", "Username or Password incorrets");

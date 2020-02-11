@@ -29,8 +29,17 @@ namespace SchoolWebApp.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var user = _userManager.GetUserAsync(User).Result;
+            if (user.UserName == "admin")
+            {
+                var students = _context.Students.ToListAsync().Result;
+                var data = _mapper.Map<List<StudentDTO>>(students);
+                return View(data);
+            }
+            else
+                return RedirectToAction("Index", "User");
         }
+
         [Route("Detail/{id}")]
         public IActionResult Detail(int id)
         {
@@ -44,19 +53,6 @@ namespace SchoolWebApp.Controllers
                 return RedirectToAction("Index", "User");
         }
 
-        [Route("StudentList")]
-        private IActionResult StudentList()
-        {
-            var user = _userManager.GetUserAsync(User).Result;
-            if (user.UserName == "admin")
-            {
-                var students = _context.Students.ToListAsync();
-                var data = _mapper.Map<List<StudentDetailViewModel>>(students);
-                return View(data);
-            }
-            else
-                return RedirectToAction("Index", "User");
-        }
 
         private StudentDetailViewModel GetStudent(int id)
         {

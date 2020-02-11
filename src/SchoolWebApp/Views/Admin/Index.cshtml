@@ -1,4 +1,4 @@
-﻿@model List<StudentDetailViewModel>
+﻿@model List<StudentDTO>
 @{
     ViewData["Title"] = "StudentList";
 }
@@ -17,10 +17,6 @@
             <th>
                 Soyadı
             </th>
-            @foreach (var item in Model.FirstOrDefault().SchoolLessonResults)
-            {
-                <th> @item.Lesson.LessonName </th>
-            }
             <th></th>
         </tr>
     </thead>
@@ -29,25 +25,19 @@
         {
             <tr>
                 <td>
-                    @st.Student.StudentCode
+                    @st.StudentCode
                 </td>
                 <td>
-                    @st.Student.FirstName
+                    @st.FirstName
                 </td>
                 <td>
-                    @st.Student.LastName
+                    @st.LastName
                 </td>
-                @foreach (var les in st.SchoolLessonResults)
-                {
-                    <td>
-                        @les.Average
-                    </td>
-                }
+
                 <td>
-                    <a asp-action="Detail" asp-route-id="@st.Student.StudentId">Detaylar</a>
+                    <a asp-action="Detail" asp-route-id="@st.StudentId">Detaylar</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-

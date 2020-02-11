@@ -34,8 +34,6 @@ namespace SchoolWebApp.Mapping
                 .ForMember(dest => dest.StudentCode, opt => opt.MapFrom(src => src.StudentCode))
                 .ForMember(dest => dest.ExamsResults, opt => opt.MapFrom(src => src.StudentExams))
             .ForMember(dest => dest.LessonResults, opt => opt.MapFrom(src => src.StudentLessons));
-          
-            CreateMap<Student, StudentDTO>();
         }
     }
 }
