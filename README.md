@@ -14,9 +14,11 @@ SimpleObs reposu .Net Core ile hazırlanmış API' lara istek yapan Asp.Net Core
 
 ## Örnek
 
-![alt text](https://github.com/codebycinar/SimpleObs/blob/master/img/Notes1.PNG)
+![Öğrenci Sınavlar](https://github.com/codebycinar/SimpleObs/blob/master/img/Notes1.PNG)
 
-![alt text](https://github.com/codebycinar/SimpleObs/blob/master/img/Notes2.PNG)
+![Öğrenci Ders Sonuç](https://github.com/codebycinar/SimpleObs/blob/master/img/Notes2.PNG)
+
+![Admin Tüm Öğrenciler](https://github.com/codebycinar/SimpleObs/blob/master/img/Notes3.PNG)
 ---
 
 ## Yükleme
@@ -39,7 +41,7 @@ SimpleObs reposu .Net Core ile hazırlanmış API' lara istek yapan Asp.Net Core
 16 sınıf (1'den 4'e - A,B,C,D şubeleri), 
 3 Ders (Türkçe, Matematik, Fen Bilimleri),
 12 Sınav (Yazılı ve Sözlü sınavlar),
-80 Öğrenci
+180 Öğrenci
 ```
 
 - Her öğrenci için abc ile başlayan kullanıcı adı oluşur, hepsinin şifresi 123456 'dır.
