@@ -32,7 +32,6 @@ namespace SchoolWebApp.Controllers
                 if (result.Succeeded)
                 {
                     var user = await _userManager.GetUserAsync(User);
-                    HttpContext.Session.SetInt32("StudentId", user.StudentId);
                     return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", "Username or Password incorrets");
@@ -44,7 +43,6 @@ namespace SchoolWebApp.Controllers
         {
             return View();
         }
-
 
         public async Task<IActionResult> Logout()
         {

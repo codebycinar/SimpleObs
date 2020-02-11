@@ -40,40 +40,15 @@ namespace SchoolWebApp.Controllers
         public IActionResult Detail()
         {
             var user = _userManager.GetUserAsync(User).Result;
-            if (user.UserName == "admin")
+            //if (user.UserName == "admin")
+            //{
+            //    return RedirectToAction("StudentList", "Admin");
+            //}
+
+            //var id = HttpContext.Session.GetInt32("StudentId");
+            if (user!=null)
             {
-                return RedirectToAction("StudentList", "Student");
-            }
-            
-            var id = HttpContext.Session.GetInt32("StudentId");
-            if (id.HasValue)
-            {
-                var data = GetStudent(id.Value);
-                return View(data);
-            }
-            else
-                return RedirectToAction("Index", "User");
-        }
-        [Route("Detail/{id}")]
-        public IActionResult Detail(int id)
-        {
-            var user = _userManager.GetUserAsync(User).Result;
-            if (user.UserName == "admin")
-            {
-                var data = GetStudent(id);
-                return View(data);
-            }
-            else
-                return RedirectToAction("Index", "User");
-        }
-        [Route("StudentList")]
-        private IActionResult StudentList()
-        {
-            var isAdmin = HttpContext.Session.GetInt32("IsAdmin");
-            if (isAdmin.Equals(1))
-            {
-                var students = _context.Students.ToListAsync();
-                var data = _mapper.Map<List<StudentDetailViewModel>>(students);
+                var data = GetStudent(user.StudentId);
                 return View(data);
             }
             else
