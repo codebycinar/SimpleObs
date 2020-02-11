@@ -1,5 +1,6 @@
 # SimpleObs
 SimpleObs reposu .Net Core ile hazırlanmış API' lara istek yapan Asp.Net Core arayüzlerden oluşan basit bir öğrenci-not senaryosunun demosudur.
+![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)
 
 # Kullanılan Teknolojiler
 
@@ -9,22 +10,9 @@ SimpleObs reposu .Net Core ile hazırlanmış API' lara istek yapan Asp.Net Core
 - SQLite
 - Automapper
 - Swagger
-
-![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)
-
-## Table of Contents
-
-- [Installation](#installation)
-- [Features](#features)
-- [Contributing](#contributing)
-- [Team](#team)
-- [FAQ](#faq)
-- [Support](#support)
-- [License](#license)
 ---
 
-## Sample
-
+## Örnek
 
 ![alt text](https://github.com/codebycinar/SimpleObs/blob/master/img/Notes1.PNG)
 
@@ -47,10 +35,12 @@ SimpleObs reposu .Net Core ile hazırlanmış API' lara istek yapan Asp.Net Core
 
 ## Kullanım
 - Database seed işlemi sonrasında aşağıdaki datalar oluşur
-> 16 sınıf (1'den 4'e - A,B,C,D şubeleri), 
-> 3 Ders (Türkçe, Matematik, Fen Bilimleri),
-> 12 Sınav (Yazılı ve Sözlü sınavlar),
-> 80 Öğrenci
+```
+16 sınıf (1'den 4'e - A,B,C,D şubeleri), 
+3 Ders (Türkçe, Matematik, Fen Bilimleri),
+12 Sınav (Yazılı ve Sözlü sınavlar),
+80 Öğrenci
+```
 
 - Her öğrenci için abc ile başlayan kullanıcı adı oluşur, hepsinin şifresi 123456 'dır.
 ```
@@ -96,8 +86,6 @@ Password : 123456
     - No problem! Just do this.
 
 ---
-
-
 
 ## License
 
