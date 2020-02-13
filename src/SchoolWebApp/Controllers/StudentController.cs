@@ -3,6 +3,7 @@ using Core.Data.DTO;
 using Core.Data.ViewModel;
 using Infrastructure;
 using Infrastructure.Database;
+using Infrastructure.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;

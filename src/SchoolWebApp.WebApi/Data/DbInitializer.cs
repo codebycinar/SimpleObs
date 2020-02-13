@@ -1,10 +1,13 @@
 ﻿using Core.Data.Entity;
+using Infrastructure.Database;
+using Infrastructure.Model;
 using Microsoft.AspNetCore.Identity;
+using SchoolWebApp.WebApi.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Infrastructure.Database
+namespace SchoolWebApp.WebApi.Data
 {
     public static class DbInitializer
     {
@@ -204,7 +207,7 @@ namespace Infrastructure.Database
                         new Student()
                         {
                             Id = id,
-                            GradeId= i + 1,
+                            GradeId = i + 1,
                             StudentCode = (100 + id).ToString(),
                             FirstName = GetName(),
                             LastName = GetSurname()
@@ -248,7 +251,7 @@ namespace Infrastructure.Database
                     var writtenExams = lessonExams.Where(x => x.Exam.ExamType == ExamTypes.Yazili).ToList();
                     var speechExams = lessonExams.Where(x => x.Exam.ExamType == ExamTypes.Sozlu);
                     var result = (writtenExams.Average(x => x.Result) + speechExams.Sum(x => x.Result)) / (1 + speechExams.Count());
-                    
+
                     entities.Add(new StudentLesson
                     {
                         LessonId = lesson.Id,
@@ -304,12 +307,12 @@ namespace Infrastructure.Database
                         }
                     }
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
 
                     throw;
                 }
-               
+
             }
             try
             {
@@ -337,7 +340,7 @@ namespace Infrastructure.Database
 
                 throw;
             }
-      
+
         }
         private static void CreateRoles(RoleManager<IdentityRole> roleManager)
         {

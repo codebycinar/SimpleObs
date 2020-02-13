@@ -3,6 +3,7 @@ using Core.Data.DTO;
 using Core.Data.ViewModel;
 using Infrastructure;
 using Infrastructure.Database;
+using Infrastructure.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

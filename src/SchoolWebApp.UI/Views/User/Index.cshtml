@@ -1,0 +1,40 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Login.cshtml";
+}
+<style>
+    .field-validation-error {
+        color: red !important;
+    }
+</style>
+<br />
+<div class="row">
+    <div class="col"></div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <form asp-action="Index" asp-controller="User" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Username"></label>
+                        <input type="text" class="form-control" asp-for="Username" />
+                        <span asp-validation-for="Username"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input type="password" class="form-control" asp-for="Password" />
+                        <span asp-validation-for="Password"></span>
+                    </div>
+                  
+                    <br />
+                    <button type="submit" class="btn btn-primary">Enter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col"></div>
+</div>
+
+
+

@@ -1,5 +1,6 @@
 ﻿using Infrastructure;
 using Infrastructure.Database;
+using Infrastructure.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;

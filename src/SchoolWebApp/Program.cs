@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Infrastructure;
 using Infrastructure.Database;
+using Infrastructure.Model;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +27,7 @@ namespace SchoolWebApp
                     var context = services.GetRequiredService<SchoolDbContext>();
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    DbInitializer.Initialize(context, userManager, roleManager);
+                    //DbInitializer.Initialize(context, userManager, roleManager);
                 }
                 catch (Exception ex)
                 {
