@@ -26,6 +26,8 @@ namespace SchoolWebApp.UI
             services.AddTransient<IStudentClient, StudentClient>();
             services.AddTransient<IUserClient, UserClient>();
 
+            services.AddHttpContextAccessor();
+
             services.AddControllersWithViews();
         }
 

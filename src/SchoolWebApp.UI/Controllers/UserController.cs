@@ -5,6 +5,8 @@ using Newtonsoft.Json;
 using SchoolWebApp.UI.Helpers;
 using SchoolWebApp.UI.Models;
 using SchoolWebApp.UI.Services;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Threading.Tasks;
 
 namespace SchoolWebApp.UI.Controllers
@@ -34,6 +36,7 @@ namespace SchoolWebApp.UI.Controllers
                 {
                     string stringJWT = await loginResult.Content.ReadAsStringAsync();
                     jwt = JsonConvert.DeserializeObject<JwtModel>(stringJWT);
+                    SetUser(jwt);
                     HttpContext.Session.SetObjectAsJson("token", jwt);
                     if (jwt.IsAdmin)
                         return RedirectToAction("Index", "Admin");
@@ -43,6 +46,13 @@ namespace SchoolWebApp.UI.Controllers
                     ModelState.AddModelError("", "Username or Password incorrets");
             }
             return View();
+        }
+
+        private void SetUser(JwtModel jwt)
+        {
+            var user = new GenericPrincipal(new ClaimsIdentity(jwt.User.UserName), new string[] { "student" });
+            HttpContext.User = user;
+
         }
     }
 }

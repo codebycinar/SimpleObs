@@ -76,7 +76,7 @@ namespace SchoolWebApp.WebApi.Identity.Controllers
                 tokenModel.HasVerifiedEmail = true;
                 JwtSecurityToken jwtSecurityToken = await CreateJwtToken(user);
                 tokenModel.IsAdmin = user.UserName == "admin";
-                tokenModel.StudentId = user.StudentId;
+                tokenModel.User = user;
                 tokenModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 tokenModel.Expiration = jwtSecurityToken.ValidTo;
 

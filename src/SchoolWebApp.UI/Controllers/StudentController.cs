@@ -23,7 +23,7 @@ namespace SchoolWebApp.UI.Controllers
             if (auth == null)
                 return RedirectToAction("Index", "User");
 
-            var studentResult = await _studentClient.GetStudentDetail(auth);
+            var studentResult = await _studentClient.GetStudentDetail(auth,auth.User.StudentId);
             if (studentResult.IsSuccessStatusCode)
             {
                 string stringResult = await studentResult.Content.ReadAsStringAsync();

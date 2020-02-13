@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Infrastructure.Model;
+using System;
 
 namespace SchoolWebApp.WebApi.Identity.Models
 {
@@ -8,6 +9,6 @@ namespace SchoolWebApp.WebApi.Identity.Models
         public string Token { get; set; }
         public DateTime? Expiration { get; set; }
         public bool? IsAdmin { get; set; }
-        public int StudentId { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }

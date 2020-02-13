@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SchoolWebApp.WebApi.Controllers
@@ -16,7 +15,7 @@ namespace SchoolWebApp.WebApi.Controllers
     [Route("api/[controller]")]
     [Authorize]
     [ApiController]
-  
+
     public class StudentController : ControllerBase
     {
         private readonly SchoolDbContext _context;
@@ -32,7 +31,7 @@ namespace SchoolWebApp.WebApi.Controllers
 
         // GET: api/Student
         [HttpGet]
-     
+
         public async Task<ActionResult<IEnumerable<StudentDTO>>> GetStudents()
         {
             var students = await _context.Students.ToListAsync();
@@ -41,6 +40,7 @@ namespace SchoolWebApp.WebApi.Controllers
 
         // GET: api/Student/5
         [HttpGet("{id}")]
+        [Route("[action]/{id}")]
         public async Task<ActionResult<StudentDetailViewModel>> GetStudent(int id)
         {
             var student = await _context.Students
@@ -54,8 +54,9 @@ namespace SchoolWebApp.WebApi.Controllers
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             var schoolResults = await _context.GradeLessons
+                .Include(x => x.Grade)
                             .ToListAsync();
-            
+
             var examResults = new List<ExamResultsDTO>();
             var lessonResults = new List<LessonResultsDTO>();
 
@@ -104,16 +105,6 @@ namespace SchoolWebApp.WebApi.Controllers
             result.SchoolLessonResults = _mapper.Map<List<GradeLessonResultDTO>>(schoolResults);
 
             return result;
-        }
-
-        private decimal GetGradeAvgByLesson(int lessonId, int gradeId)
-        {
-            var gradeResults = _context.GradeLessons.FirstOrDefault(x => x.GradeId.Equals(gradeId) && x.LessonId.Equals(lessonId));
-            return gradeResults.Average;
-        }
-        private bool StudentExists(int id)
-        {
-            return _context.Students.Any(s => s.Id == id);
         }
     }
 }

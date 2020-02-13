@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Infrastructure.Model;
+using System;
 
 namespace SchoolWebApp.UI.Models
 {
@@ -7,7 +8,7 @@ namespace SchoolWebApp.UI.Models
         public bool HasVerifiedEMail { get; set; }
         public string Token { get; set; }
         public bool IsAdmin { get; set; }
-        public int StudentId { get; set; }
+        public ApplicationUser User { get; set; }
         public DateTime Expiration { get; set; }
     }
 }
