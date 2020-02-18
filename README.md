@@ -42,7 +42,7 @@ SimpleObs reposu .Net Core 3.1 ile hazırlanmış  .Net Core WebAPI'lere çağr�
 16 sınıf (1'den 4'e - A,B,C,D şubeleri), 
 3 Ders (Türkçe, Matematik, Fen Bilimleri),
 12 Sınav (Yazılı ve Sözlü sınavlar),
-180 Öğrenci
+80 Öğrenci
 ```
 
 - Her öğrenci için abc ile başlayan kullanıcı adı oluşur, hepsinin şifresi 123456 'dır.

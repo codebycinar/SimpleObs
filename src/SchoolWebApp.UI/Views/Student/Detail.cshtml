@@ -36,6 +36,44 @@
                     @Html.DisplayFor(model => model.Student.Grade.GradeName)
                 </dd>
             </dl>
+            @foreach (var lessonResult in Model.Student.LessonResults)
+            {
+                var lessonResults = Model.SchoolLessonResults.Where(
+                    x => x.Lesson.LessonId.Equals(lessonResult.Lesson.LessonId)).ToList();
+
+                var schoolTop10 = lessonResults
+                    .OrderByDescending(x => x.Average).Take(10);
+
+                <div class="row">
+                    <h4>@lessonResult.Lesson.LessonName - TOP 10</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Ders
+                                </th>
+                                <th>
+                                    Not
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var results in schoolTop10)
+                            {
+                                <tr>
+                                    <td>
+                                        @results.Lesson.LessonName
+                                    </td>
+                                    <td>
+                                        @results.Average
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            }
         </div>
         <div class="col-md-8">
             <h4>Exam Results</h4>
@@ -59,13 +97,13 @@
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Exam.ExamName)
+                               @item.Exam.ExamName
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Exam.ExamType)
+                                @item.Exam.ExamType
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Result)
+                                @item.Result
                             </td>
                         </tr>
                     }
@@ -95,25 +133,23 @@
             </thead>
             <tbody>
                 @foreach (var lessonResult in Model.Student.LessonResults)
-                
                 {
-                    
                     var lessonResults = Model.SchoolLessonResults.Where(
                         x => x.Lesson.LessonId.Equals(lessonResult.Lesson.LessonId)).ToList();
 
                     var schoolTop10 = lessonResults
                         .OrderByDescending(x => x.Average).Take(10);
-                     var schoolAvg = lessonResults
-                        .Average(x => x.Average);
-                    var gradeAvg = lessonResults.Where(x => x.Grade.GradeId.Equals(Model.Student.Grade.GradeId)).Average(x=>x.Average);
+                    var schoolAvg = lessonResults
+                       .Average(x => x.Average);
+                    var gradeAvg = lessonResults.Where(x => x.Grade.GradeId.Equals(Model.Student.Grade.GradeId)).Average(x => x.Average);
 
                     <tr class="@(lessonResult.Result< gradeAvg ? "table-danger" : lessonResult.Result>schoolTop10.LastOrDefault().Average ? "table-success" : "")">
                         >
                         <td class="alert">
-                            @Html.DisplayFor(modelItem => lessonResult.Lesson.LessonName)
+                            @lessonResult.Lesson.LessonName
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => lessonResult.Result)
+                            @lessonResult.Result
                         </td>
                         <td>
                             @gradeAvg

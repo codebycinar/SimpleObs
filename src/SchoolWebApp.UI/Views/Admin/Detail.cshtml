@@ -36,6 +36,44 @@
                     @Html.DisplayFor(model => model.Student.Grade.GradeName)
                 </dd>
             </dl>
+            @foreach (var lessonResult in Model.Student.LessonResults)
+            {
+                var lessonResults = Model.SchoolLessonResults.Where(
+                    x => x.Lesson.LessonId.Equals(lessonResult.Lesson.LessonId)).ToList();
+
+                var schoolTop10 = lessonResults
+                    .OrderByDescending(x => x.Average).Take(10);
+
+                <div class="row">
+                    <h4>@lessonResult.Lesson.LessonName - TOP 10</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Ders
+                                </th>
+                                <th>
+                                    Not
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var results in schoolTop10)
+                            {
+                                <tr>
+                                    <td>
+                                        @results.Lesson.LessonName
+                                    </td>
+                                    <td>
+                                        @results.Average
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            }
         </div>
         <div class="col-md-8">
             <h4>Exam Results</h4>
