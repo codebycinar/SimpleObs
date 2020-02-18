@@ -8,10 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using SchoolWebApp.WebApi.Helpers;
-using SchoolWebApp.WebApi.Identity;
 using SchoolWebApp.WebApi.Mapping;
 using SchoolWebApp.WebApi.Settings;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace SchoolWebApp.WebApi
 {
@@ -61,36 +60,32 @@ namespace SchoolWebApp.WebApi
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "School API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "School API",
+                    Version = "v1"
+                });
+                c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
-                      Enter 'Bearer' [space] and then your token in the text input below.
-                      \r\n\r\nExample: 'Bearer 12345abcdef'",
-                    Name = "Authorization",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
+                    Description = "Please insert JWT with Bearer into field",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
                 });
-
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                {
-                  {
-                    new OpenApiSecurityScheme
-                    {
-                      Reference = new OpenApiReference
-                        {
-                          Type = ReferenceType.SecurityScheme,
-                          Id = "Bearer"
-                        },
-                        Scheme = "oauth2",
-                        Name = "Bearer",
-                        In = ParameterLocation.Header,
-
-                      },
-                      new List<string>()
-                    }
-                  });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                 {
+                   new OpenApiSecurityScheme
+                   {
+                     Reference = new OpenApiReference
+                     {
+                       Type = ReferenceType.SecurityScheme,
+                       Id = "Bearer"
+                     }
+                    },
+                    new string[] { }
+                  }
+                });
             });
 
             services.AddControllers()
@@ -107,6 +102,14 @@ namespace SchoolWebApp.WebApi
 
             app.UseHttpsRedirection();
 
+            app.UseRouting();
+
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseDeveloperExceptionPage();
+
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
 
@@ -116,12 +119,6 @@ namespace SchoolWebApp.WebApi
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "School API V1");
             });
-
-            app.UseRouting();
-
-            app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
