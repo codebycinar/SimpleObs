@@ -23,20 +23,14 @@ namespace SchoolWebApp.WebApi.Identity.Controllers
     public class AuthController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IConfiguration _configuration;
         private readonly JwtSecurityTokenSettings _jwt;
 
         public AuthController(
             UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager,
-            IConfiguration configuration,
             IOptions<JwtSecurityTokenSettings> jwt
             )
         {
             this._userManager = userManager;
-            this._roleManager = roleManager;
-            this._configuration = configuration;
             this._jwt = jwt.Value;
         }
 
@@ -75,7 +69,9 @@ namespace SchoolWebApp.WebApi.Identity.Controllers
             {
                 tokenModel.HasVerifiedEmail = true;
                 JwtSecurityToken jwtSecurityToken = await CreateJwtToken(user);
-                tokenModel.IsAdmin = user.UserName == "admin";
+                //tokenModel.IsAdmin = user.UserName == "admin";
+                var roles = _userManager.GetRolesAsync(user).Result;
+                tokenModel.IsAdmin = roles.FirstOrDefault(x => x.Equals("Admin")) != null;
                 tokenModel.User = user;
                 tokenModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 tokenModel.Expiration = jwtSecurityToken.ValidTo;
@@ -119,7 +115,7 @@ namespace SchoolWebApp.WebApi.Identity.Controllers
                 issuer: _jwt.Issuer,
                 audience: _jwt.Audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(_jwt.DurationInMinutes),
+                expires: DateTime.Now.AddMinutes(_jwt.DurationInMinutes),
                 signingCredentials: signingCredentials);
             return jwtSecurityToken;
         }

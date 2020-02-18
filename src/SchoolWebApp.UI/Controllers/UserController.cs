@@ -43,7 +43,7 @@ namespace SchoolWebApp.UI.Controllers
                     return RedirectToAction("Index", "Student");
                 }
                 else
-                    ModelState.AddModelError("", "Username or Password incorrets");
+                    ModelState.AddModelError("", "Username or Password incorrect");
             }
             return View();
         }
