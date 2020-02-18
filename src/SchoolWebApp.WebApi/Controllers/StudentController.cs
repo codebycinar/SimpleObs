@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Core.Data.DTO;
-using Core.Data.ViewModel;
 using Infrastructure.Database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Models.DTOs;
+using Models.ViewModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

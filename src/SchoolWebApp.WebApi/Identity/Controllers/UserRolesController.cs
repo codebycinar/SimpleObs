@@ -1,6 +1,6 @@
-﻿using Infrastructure.Model;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Models.Identity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

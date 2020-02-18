@@ -1,6 +1,6 @@
-﻿using Core.Data.DTO;
-using Core.Data.ViewModel;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Models.DTOs;
+using Models.ViewModels;
 using Newtonsoft.Json;
 using SchoolWebApp.UI.Helpers;
 using SchoolWebApp.UI.Models;

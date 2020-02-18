@@ -1,7 +1,7 @@
-﻿using Core.Data.DTO;
+﻿using Models.DTOs;
 using System.Collections.Generic;
 
-namespace Core.Data.ViewModel
+namespace Models.ViewModels
 {
     public class StudentDetailViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Core.Data.DTO;
 using Core.Data.Entity;
+using Models.DTOs;
 
 namespace SchoolWebApp.WebApi.Mapping
 {

@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolWebApp.UI", "src\Scho
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolWebApp.WebApi", "src\SchoolWebApp.WebApi\SchoolWebApp.WebApi.csproj", "{922744C9-9BD6-47AB-B8D8-27BB3DFB9A86}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{16994F55-4E0C-479F-BC89-E4F48FF471F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{922744C9-9BD6-47AB-B8D8-27BB3DFB9A86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{922744C9-9BD6-47AB-B8D8-27BB3DFB9A86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{922744C9-9BD6-47AB-B8D8-27BB3DFB9A86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16994F55-4E0C-479F-BC89-E4F48FF471F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16994F55-4E0C-479F-BC89-E4F48FF471F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16994F55-4E0C-479F-BC89-E4F48FF471F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16994F55-4E0C-479F-BC89-E4F48FF471F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

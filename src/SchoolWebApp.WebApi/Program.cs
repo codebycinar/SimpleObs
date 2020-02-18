@@ -1,10 +1,10 @@
 ﻿using Infrastructure.Database;
-using Infrastructure.Model;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Models.Identity;
 using SchoolWebApp.WebApi.Data;
 using System;
 

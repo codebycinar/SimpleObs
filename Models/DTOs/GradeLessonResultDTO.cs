@@ -1,4 +1,4 @@
-﻿namespace Core.Data.DTO
+﻿namespace Models.DTOs
 {
     public class GradeLessonResultDTO
     {

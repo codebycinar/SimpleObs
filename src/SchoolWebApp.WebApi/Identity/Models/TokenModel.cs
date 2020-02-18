@@ -1,4 +1,4 @@
-﻿using Infrastructure.Model;
+﻿using Models.Identity;
 using System;
 
 namespace SchoolWebApp.WebApi.Identity.Models

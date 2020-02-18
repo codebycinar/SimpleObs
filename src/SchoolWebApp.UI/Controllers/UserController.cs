@@ -1,6 +1,6 @@
-﻿using Core.Data.ViewModel;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models.ViewModels;
 using Newtonsoft.Json;
 using SchoolWebApp.UI.Helpers;
 using SchoolWebApp.UI.Models;

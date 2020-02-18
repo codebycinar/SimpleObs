@@ -1,7 +1,7 @@
-﻿using Infrastructure.Model;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Models.Identity;
 using SchoolWebApp.WebApi.Identity.Models;
 using System.Text;
 using System.Text.Encodings.Web;

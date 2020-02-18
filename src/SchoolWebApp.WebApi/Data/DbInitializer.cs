@@ -1,8 +1,7 @@
 ﻿using Core.Data.Entity;
 using Infrastructure.Database;
-using Infrastructure.Model;
 using Microsoft.AspNetCore.Identity;
-using SchoolWebApp.WebApi.Identity;
+using Models.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

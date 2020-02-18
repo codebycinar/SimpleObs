@@ -1,6 +1,6 @@
 ﻿using Core.Data.Entity;
 
-namespace Core.Data.DTO
+namespace Models.DTOs
 {
     public class ExamDTO
     {

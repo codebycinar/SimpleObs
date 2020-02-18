@@ -1,10 +1,7 @@
-﻿using Core.Data.ViewModel;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+using Models.ViewModels;
 using Newtonsoft.Json;
-using SchoolWebApp.UI.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;

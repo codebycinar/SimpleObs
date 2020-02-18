@@ -1,9 +1,9 @@
-﻿using Infrastructure.Model;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Models.Identity;
 using SchoolWebApp.WebApi.Helpers;
 using SchoolWebApp.WebApi.Identity.Models;
 using SchoolWebApp.WebApi.Identity.ViewModels;

@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Database;
-using Infrastructure.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using Models.Identity;
 using System;
 
 namespace SchoolWebApp.WebApi.Helpers
