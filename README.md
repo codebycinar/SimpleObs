@@ -1,5 +1,5 @@
 # SimpleObs
-SimpleObs reposu .Net Core 3.1 ile hazırlanmış Asp.Net Core MVC arayüzlerden oluşan basit bir öğrenci-not senaryosunun demosudur.
+SimpleObs reposu .Net Core 3.1 ile hazırlanmış  .Net Core WebAPI'lere çağrı yapan Asp.Net Core MVC arayüzlerden oluşan basit bir öğrenci-not senaryosunun demosudur.
 
 ![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)
 
